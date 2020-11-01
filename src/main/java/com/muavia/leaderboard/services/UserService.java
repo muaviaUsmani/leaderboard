@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -52,7 +49,7 @@ public class UserService {
         return scoreDao.store(score);
     }
 
-    public String getLeaderboard(Integer n) {
+    public List<LeaderboardItem> getLeaderboard(Integer n) {
         Gson gson = new Gson();
 
         List<Score> scores = scoreDao.getSortedN(n);
@@ -60,11 +57,24 @@ public class UserService {
         for (int i=0; i<scores.size(); i++) {
             Integer playerScore = scores.get(i).getScore();
             Optional<User> user = get(scores.get(i).getUserId());
+            System.out.println(new Gson().toJson(user));
             if (!user.isEmpty()) {
                 LeaderboardItem entry = new LeaderboardItem(user.get().getName(), playerScore, user.get().getAvatar());
                 leaderboard.add(entry);
             }
         }
-        return gson.toJson(leaderboard);
+        return leaderboard;
+    }
+
+    public int seedUsers() {
+        List<User> users = userDao.seedUsers();
+        Random rand = new Random();
+
+        for (int i=0; i<users.size(); i++) {
+            User user = users.get(i);
+            Score score = new Score(UUID.randomUUID(), user.getId(), rand.nextInt(500));
+            addScore(score);
+        }
+        return 1;
     }
 }

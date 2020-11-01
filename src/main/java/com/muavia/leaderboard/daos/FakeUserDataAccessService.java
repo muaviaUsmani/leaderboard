@@ -5,14 +5,21 @@ import com.muavia.leaderboard.models.User;
 import com.muavia.leaderboard.services.ScoreService;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository("fakeUserDao")
 public class FakeUserDataAccessService implements UserDao {
     private static List<User> DB = new ArrayList<>();
+
+    @Override
+    public List<User> seedUsers() {
+        DB.add(new User(UUID.randomUUID(), "Alex Hernandez", "https://randomuser.me/api/portraits/men/7.jpg"));
+        DB.add(new User(UUID.randomUUID(), "Mike Morris", "https://randomuser.me/api/portraits/men/21.jpg"));
+        DB.add(new User(UUID.randomUUID(), "John Danaher", "https://randomuser.me/api/portraits/men/79.jpg"));
+        DB.add(new User(UUID.randomUUID(), "Joe Rogan", "https://randomuser.me/api/portraits/men/94.jpg"));
+        DB.add(new User(UUID.randomUUID(), "Justin Gaethje", "https://randomuser.me/api/portraits/men/62.jpg"));
+        return DB;
+    }
 
     @Override
     public int store(UUID id, User user) {

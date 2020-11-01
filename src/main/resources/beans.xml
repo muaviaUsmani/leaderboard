@@ -59,7 +59,7 @@
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
 <!--        <property name="prefix" value="/templates/" />-->
         <property name="suffix" value=".html" />
-        <property name="templateMode" value="HTML5" />
+        <property name="templateMode" value="HTML" />
     </bean>
 
     <bean id="templateEngine"
@@ -69,6 +69,8 @@
 
     <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
+        <property name="order" value="1" />
+        <property name="viewNames" value="*.html,*.xhtml" />
     </bean>
 
 

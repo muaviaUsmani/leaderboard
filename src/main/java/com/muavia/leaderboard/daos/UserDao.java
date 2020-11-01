@@ -1,5 +1,6 @@
 package com.muavia.leaderboard.daos;
 
+import com.google.gson.Gson;
 import com.muavia.leaderboard.models.Score;
 import com.muavia.leaderboard.models.User;
 
@@ -13,7 +14,13 @@ public interface UserDao {
     List<User> getAll();
 
     default int store(User user) {
-        UUID id = UUID.randomUUID();
+        UUID id;
+        if (user.getId() == null) {
+            id = UUID.randomUUID();
+        } else {
+            id = user.getId();
+        }
+        System.out.println(id);
         return store(id, user);
     }
 
@@ -22,4 +29,6 @@ public interface UserDao {
     int put(UUID id, User user);
 
     int delete(UUID id);
+
+    List<User> seedUsers();
 }

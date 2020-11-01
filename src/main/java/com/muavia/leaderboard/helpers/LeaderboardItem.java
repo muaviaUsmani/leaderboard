@@ -10,4 +10,16 @@ public class LeaderboardItem {
         this.score = score;
         this.avatar = avatar;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
 }
